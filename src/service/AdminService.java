@@ -7,10 +7,11 @@ import entity.Section;
 import entity.SectionStatus;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 public class AdminService {
-    public void service(){
-        while (true){
+    public void service() {
+        while (true) {
             System.out.println("""
                     0 exit
                     1 add section
@@ -23,8 +24,10 @@ public class AdminService {
                     8 show users
                     9 show user (books borrowed)
                     """);
-            switch (intscan.nextInt()){
-                case 0 -> {return;}
+            switch (intscan.nextInt()) {
+                case 0 -> {
+                    return;
+                }
                 case 1 -> addSection();
                 case 2 -> showSections();
                 case 3 -> showSectionWithBooks();
@@ -80,5 +83,72 @@ public class AdminService {
         System.out.println("Section not found.");
 
     }
+
+    private static void setSectionState() {
+        System.out.println("Enter section name:");
+        String sectionName = strscan.nextLine();
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
+                System.out.println("Current status: " + section.getSectionStatus());
+                System.out.println("Enter new status (ENABLED/DISABLED):");
+                String newStatus = strscan.nextLine().toUpperCase();
+
+                try {
+                    section.setSectionStatus(SectionStatus.valueOf(newStatus));
+                    System.out.println("Section status updated successfully.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid status. Please enter ENABLED or DISABLED.");
+                }
+                return;
+            }
+        }
+        System.out.println("Section not found.");
+    }
+
+    private static void addBook() {
+        System.out.println("Enter section name to add book:");
+        String sectionName = strscan.nextLine();
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
+                System.out.println("Enter book title:");
+                String title = strscan.nextLine();
+                System.out.println("Enter book author:");
+                String author = strscan.nextLine();
+                System.out.println("Enter total copies:");
+                int totalBooks = strscan.nextInt();
+                strscan.nextLine();
+
+                Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks);
+                books.add(newBook);
+                section.getBooks().add(newBook);
+
+                System.out.println("Book added successfully: " + title);
+                return;
+            }
+        }
+        System.out.println("Section not found.");
+    }
+
+
+    private static void removeBook() {
+        System.out.println("Enter book title to remove:");
+        String bookTitle = strscan.nextLine();
+
+        for (Iterator<Book> iterator = books.iterator(); iterator.hasNext();) {
+            Book book = iterator.next();
+            if (book.getTitle().equalsIgnoreCase(bookTitle)) {
+                iterator.remove();
+                book.getSection().getBooks().remove(book);
+                System.out.println("Book removed successfully: " + bookTitle);
+                return;
+            }
+        }
+        System.out.println("Book not found.");
+    }
+
+
+
 }
 

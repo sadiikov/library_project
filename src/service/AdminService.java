@@ -1,6 +1,8 @@
 package service;
 
 import static db.DataBase.*;
+
+import entity.Book;
 import entity.Section;
 import entity.SectionStatus;
 
@@ -37,14 +39,46 @@ public class AdminService {
         }
     }
 
-    private void addSection() {
+    private static void addSection() {
         System.out.println("Enter section name:");
-        String sectionName = scanner.nextLine();
+        String sectionName = strscan.nextLine();
 
         Section newSection = new Section(UUID.randomUUID().toString(), sectionName, new ArrayList<>(), SectionStatus.ENABLED);
         sections.add(newSection);
 
         System.out.println("Section added successfully: " + sectionName);
+    }
+
+    private static void showSections() {
+        if (sections.isEmpty()) {
+            System.out.println("No sections available.");
+            return;
+        }
+        System.out.println("Available sections:");
+        for (Section section : sections) {
+            System.out.println("- " + section.getName() + " (Status: " + section.getSectionStatus() + ")");
+        }
+    }
+
+    private static void showSectionWithBooks() {
+        System.out.println("Enter section name:");
+        String sectionName = strscan.nextLine();
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
+                System.out.println("Books in section " + sectionName + ":");
+                if (section.getBooks().isEmpty()) {
+                    System.out.println("No books available in this section.");
+                } else {
+                    for (Book book : section.getBooks()) {
+                        System.out.println("- " + book.getTitle() + " by " + book.getAuthor());
+                    }
+                }
+                return;
+            }
+        }
+        System.out.println("Section not found.");
+
     }
 }
 

@@ -15,12 +15,12 @@ public class UserService {
                 """);
         switch (intscan.nextInt()){
             case 0 -> {return;}
-//            case 1 -> showSections();
-//            case 2 -> showSectionById();
-//            case 3 -> borrow();
-//            case 4 -> returnBook();
-//            case 5 -> currentBorrowedBooks();
-//            case 6 -> historyOfBorrowedBooks();
+            case 1 -> showSections();
+            case 2 -> showSectionById();
+            case 3 -> borrow();
+            case 4 -> returnBook();
+            case 5 -> currentBorrowedBooks();
+            case 6 -> historyOfBorrowedBooks();
             default -> System.out.println("incorrect command");
         }
     }

@@ -19,15 +19,15 @@ public class AdminService {
                     """);
             switch (intscan.nextInt()){
                 case 0 -> {return;}
-                case 1 -> addSection();
-                case 2 -> showSections();
-                case 3 -> showSectionWithBooks();
-                case 4 -> setSectionState();
-                case 5 -> addBook();
-                case 6 -> removeBook();
-                case 7 -> setBookState();
-                case 8 -> showUsers();
-                case 9 -> showBorrowedBooksUserById();
+//                case 1 -> addSection();
+//                case 2 -> showSections();
+//                case 3 -> showSectionWithBooks();
+//                case 4 -> setSectionState();
+//                case 5 -> addBook();
+//                case 6 -> removeBook();
+//                case 7 -> setBookState();
+//                case 8 -> showUsers();
+//                case 9 -> showBorrowedBooksUserById();
                 default -> System.out.println("incorrect command");
             }
         }

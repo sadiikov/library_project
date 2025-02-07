@@ -1,7 +1,11 @@
 package service;
 
 import static db.DataBase.*;
+import entity.Section;
+import entity.SectionStatus;
 
+import java.util.ArrayList;
+import java.util.UUID;
 public class AdminService {
     public void service(){
         while (true){
@@ -32,4 +36,15 @@ public class AdminService {
             }
         }
     }
+
+    private void addSection() {
+        System.out.println("Enter section name:");
+        String sectionName = scanner.nextLine();
+
+        Section newSection = new Section(UUID.randomUUID().toString(), sectionName, new ArrayList<>(), SectionStatus.ENABLED);
+        sections.add(newSection);
+
+        System.out.println("Section added successfully: " + sectionName);
+    }
 }
+

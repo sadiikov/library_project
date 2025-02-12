@@ -28,21 +28,21 @@ public class AuthService {
     }
 
     private static void signIn() {
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
-        System.out.println("  ============================  ");
-        System.out.println(" |                             | ");
-        System.out.println(" |  WELCOME TO THE SYSTEM      | ");
-        System.out.println(" |   PLEASE SIGN IN BELOW      | ");
-        System.out.println(" |=============================| ");
-        System.out.println("\n  ================================");
+//        System.out.println(" ");
+//        System.out.println(" ");
+//        System.out.println(" ");
+//        System.out.println("  ============================  ");
+//        System.out.println(" |                             | ");
+//        System.out.println(" |  WELCOME TO THE SYSTEM      | ");
+//        System.out.println(" |   PLEASE SIGN IN BELOW      | ");
+//        System.out.println(" |=============================| ");
+//        System.out.println("\n  ================================");
         System.out.println("  |  ENTER YOUR EMAIL:            |");
-        System.out.println("  ================================");
+//        System.out.println("  ================================");
         String email = strscan.nextLine();
-        System.out.println("  ================================");
+//        System.out.println("  ================================");
         System.out.println("  |  ENTER YOUR PASSWORD:         |");
-        System.out.println("  ================================");
+//        System.out.println("  ================================");
         String password = strscan.nextLine();
 
         boolean signed = false;
@@ -55,54 +55,54 @@ public class AuthService {
         }
 
         if(signed){
-            System.out.println("\n  ================================");
+//            System.out.println("\n  ================================");
             System.out.println("  |  SIGN-IN SUCCESSFUL!          |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
 
             if(getCurrentUser().getRole() == Role.USER){
-                System.out.println("  ================================");
+//                System.out.println("  ================================");
                 System.out.println("  |  YOU ARE LOGGED IN AS A USER. |");
-                System.out.println("  ================================");
+//                System.out.println("  ================================");
                 new UserService().service();
             } else {
-                System.out.println("  ================================");
+//                System.out.println("  ================================");
                 System.out.println("  |  YOU ARE LOGGED IN AS ADMIN.  |");
-                System.out.println("  ================================");
+//                System.out.println("  ================================");
                 new AdminService().service();
             }
         } else {
-            System.out.println("\n  ================================");
+//            System.out.println("\n  ================================");
             System.out.println("  | ERROR: EMAIL OR PASSWORD IS   |");
             System.out.println("  | INCORRECT.                    |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
         }
     }
 
 
     private static void signUp() {
-        System.out.println("  ================================");
+//        System.out.println("  ================================");
         System.out.println("  |  ENTER YOUR EMAIL:            |");
-        System.out.println("  ================================");
+//        System.out.println("  ================================");
         String email = strscan.nextLine();
 
         if(emailIsUnique(email)){
             User user = new User();
 
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             System.out.println("  |  ENTER YOUR PASSWORD:         |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             user.setPassword(strscan.nextLine());
 
             user.setId(UUID.randomUUID().toString());
 
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             System.out.println("  |  ENTER YOUR NAME:             |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             user.setName(strscan.nextLine());
 
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             System.out.println("  |  ENTER YOUR SURNAME:          |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             user.setSurname(strscan.nextLine());
 
             user.setEmail(email);
@@ -114,14 +114,14 @@ public class AuthService {
 
             users.add(user);
 
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             System.out.println("  |  SIGN-UP SUCCESSFUL!          |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
         }else{
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
             System.out.println("  |  THIS EMAIL IS ALREADY        |");
             System.out.println("  |  SIGNED UP!                   |");
-            System.out.println("  ================================");
+//            System.out.println("  ================================");
         }
     }
 

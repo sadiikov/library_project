@@ -7,17 +7,27 @@ public class Book {
     private Section section;
     private Integer totalBooks;
     private Integer availableBooks;
+    private BookState bookState;
 
     public Book() {
     }
 
-    public Book(String id, String title, String author, Section section, Integer totalBooks, Integer availableBooks) {
+    public Book(String id, String title, String author, Section section, Integer totalBooks, Integer availableBooks, BookState bookState) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.section = section;
         this.totalBooks = totalBooks;
         this.availableBooks = availableBooks;
+        this.bookState = bookState;
+    }
+
+    public BookState getBookState() {
+        return bookState;
+    }
+
+    public void setBookState(BookState bookState) {
+        this.bookState = bookState;
     }
 
     public String getId() {
@@ -77,6 +87,7 @@ public class Book {
                 ", section=" + section +
                 ", totalBooks=" + totalBooks +
                 ", availableBooks=" + availableBooks +
+                ", bookState=" + bookState +
                 '}';
     }
 }

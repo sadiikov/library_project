@@ -1,5 +1,14 @@
 package service;
 
+import entity.*;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
 import static db.DataBase.*;
 
 public class UserService {
@@ -22,6 +31,99 @@ public class UserService {
             case 5 -> currentBorrowedBooks();
             case 6 -> historyOfBorrowedBooks();
             default -> System.out.println("incorrect command");
+        }
+    }
+
+    private void historyOfBorrowedBooks() {
+        User user = getCurrentUser();
+
+        for (History history : user.getHistories()) {
+            System.out.println(history);
+        }
+    }
+
+    private void currentBorrowedBooks() {
+        User user = getCurrentUser();
+
+        for (Borrow borrow : user.getBorrows()) {
+            System.out.println(borrow);
+        }
+    }
+
+    private void returnBook() {
+        System.out.println("Enter title of the book: ");
+        String title = strscan.nextLine();
+
+        User user = getCurrentUser();
+        boolean found = false;
+
+        for (Iterator<Borrow> iterator = user.getBorrows().iterator(); iterator.hasNext();) {
+            Borrow borrow = iterator.next();
+
+            if(borrow.getBook().getTitle().equalsIgnoreCase(title) && borrow.getBorrowState() == BorrowState.BORROWED){
+                found = true;
+
+                LocalDateTime returnDateTime = LocalDateTime.now();
+                borrow.setReturnDateTime(returnDateTime);
+                borrow.setBorrowState(BorrowState.RETURNED);
+
+                long borrowedTime = Duration.between(borrow.getBorrowedDateTime(), returnDateTime).toMinutes();
+                long fee = borrowedTime * 500;
+                user.setBalance(user.getBalance() - fee);
+
+                borrow.getBook().setAvailableBooks(borrow.getBook().getAvailableBooks() + 1);
+
+                iterator.remove();
+                user.getHistories().add(new History(user, borrow.getBook(), borrow.getBorrowedDateTime(), returnDateTime));
+
+                System.out.println("Book returned successfully. Fee: " + fee + " UZS");
+                break;
+            }
+        }
+
+        if(!found) System.out.println("Book not found");
+    }
+
+    private void borrow() {
+        System.out.println("Enter book title: ");
+        String title = strscan.nextLine();
+        boolean found = false;
+        User user = getCurrentUser();
+
+        for (Book book : books) {
+            if(book.getTitle().equalsIgnoreCase(title) && book.getAvailableBooks() > 0 && user.getBorrows().size() < 5){
+                found = true;
+                Borrow borrow = new Borrow(UUID.randomUUID().toString(), user, book, BorrowState.BORROWED, LocalDateTime.now(), null);
+                user.getBorrows().add(borrow);
+                History history = new History(user, book, LocalDateTime.now(), null);
+                user.getHistories().add(history);
+                book.setAvailableBooks(book.getAvailableBooks() - 1);
+                System.out.println("Book booked " + book.getTitle());
+                break;
+            }
+        }
+        if(!found) System.out.println("Book not found or unavailable");
+    }
+
+
+    private void showSectionById() {
+        System.out.println("Enter section id: ");
+        String id = strscan.nextLine();
+        boolean found = false;
+
+        for (Section section : sections) {
+            if(section.getId().equalsIgnoreCase(id)){
+                found = true;
+
+                System.out.println(section);
+            }
+        }
+        if(!found) System.out.println("Section not found");
+    }
+
+    private void showSections() {
+        for (Section section : sections) {
+            System.out.println(section);
         }
     }
 }

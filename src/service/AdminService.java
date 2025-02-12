@@ -2,6 +2,7 @@ package service;
 
 import static db.DataBase.*;
 
+import entity.*;
 import entity.Book;
 import entity.Section;
 import entity.SectionStatus;
@@ -42,6 +43,31 @@ public class AdminService {
         }
     }
 
+    private static void setBookState() {
+        System.out.println("Enter book title to set state:");
+        String bookTitle = strscan.nextLine();
+        boolean found = false;
+
+        for (Book book : books) {
+            if (book.getTitle().equalsIgnoreCase(bookTitle)) {
+                found = true;
+                System.out.println("Current state: " + book.getBookState());
+                System.out.println("Enter new state (AVAILABLE, BORROWED):");
+                String newState = strscan.nextLine().toUpperCase();
+
+                try {
+                    book.setBookState(BookState.valueOf(newState));
+                    System.out.println("Book state updated successfully.");
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid state. Please enter one of the valid states.");
+                }
+                break;
+            }
+        }
+
+        if (!found) System.out.println("Book not found.");
+    }
+
     private static void addSection() {
         System.out.println("Enter section name:");
         String sectionName = strscan.nextLine();
@@ -56,6 +82,11 @@ public class AdminService {
         if (sections.isEmpty()) {
             System.out.println("No sections available.");
             return;
+        }else {
+            System.out.println("Available sections:");
+            for (Section section : sections) {
+                System.out.println("- " + section.getName() + " (Status: " + section.getSectionStatus() + ")");
+            }
         }
         System.out.println("Available sections:");
         for (Section section : sections) {
@@ -66,6 +97,11 @@ public class AdminService {
     private static void showSectionWithBooks() {
         System.out.println("Enter section name:");
         String sectionName = strscan.nextLine();
+        boolean found = false;
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
+                found = true;
 
         for (Section section : sections) {
             if (section.getName().equalsIgnoreCase(sectionName)) {
@@ -77,6 +113,10 @@ public class AdminService {
                         System.out.println("- " + book.getTitle() + " by " + book.getAuthor());
                     }
                 }
+                break;
+            }
+        }
+        if(!found) System.out.println("Section not found.");
                 return;
             }
         }
@@ -109,6 +149,11 @@ public class AdminService {
     private static void addBook() {
         System.out.println("Enter section name to add book:");
         String sectionName = strscan.nextLine();
+        boolean found = false;
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
+                found = true;
 
         for (Section section : sections) {
             if (section.getName().equalsIgnoreCase(sectionName)) {
@@ -120,11 +165,16 @@ public class AdminService {
                 int totalBooks = strscan.nextInt();
                 strscan.nextLine();
 
+                Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks, BookState.AVAILABLE);
                 Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks);
                 books.add(newBook);
                 section.getBooks().add(newBook);
 
                 System.out.println("Book added successfully: " + title);
+                break;
+            }
+        }
+        if(!found) System.out.println("Section not found.");
                 return;
             }
         }
@@ -148,6 +198,26 @@ public class AdminService {
         System.out.println("Book not found.");
     }
 
+    private void showUsers() {
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    private void showBorrowedBooksUserById() {
+        System.out.println("Enter user id: ");
+        String id = strscan.nextLine();
+        boolean found = false;
+
+        for (User user : users) {
+            if(user.getId().equalsIgnoreCase(id)){
+                found = true;
+                System.out.println(user.getHistories());
+                break;
+            }
+        }
+        if(!found) System.out.println("User not found");
+    }
 
 
 }

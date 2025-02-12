@@ -102,9 +102,6 @@ public class AdminService {
         for (Section section : sections) {
             if (section.getName().equalsIgnoreCase(sectionName)) {
                 found = true;
-
-        for (Section section : sections) {
-            if (section.getName().equalsIgnoreCase(sectionName)) {
                 System.out.println("Books in section " + sectionName + ":");
                 if (section.getBooks().isEmpty()) {
                     System.out.println("No books available in this section.");
@@ -117,10 +114,6 @@ public class AdminService {
             }
         }
         if(!found) System.out.println("Section not found.");
-                return;
-            }
-        }
-        System.out.println("Section not found.");
 
     }
 
@@ -154,9 +147,6 @@ public class AdminService {
         for (Section section : sections) {
             if (section.getName().equalsIgnoreCase(sectionName)) {
                 found = true;
-
-        for (Section section : sections) {
-            if (section.getName().equalsIgnoreCase(sectionName)) {
                 System.out.println("Enter book title:");
                 String title = strscan.nextLine();
                 System.out.println("Enter book author:");
@@ -166,7 +156,6 @@ public class AdminService {
                 strscan.nextLine();
 
                 Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks, BookState.AVAILABLE);
-                Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks);
                 books.add(newBook);
                 section.getBooks().add(newBook);
 
@@ -175,10 +164,6 @@ public class AdminService {
             }
         }
         if(!found) System.out.println("Section not found.");
-                return;
-            }
-        }
-        System.out.println("Section not found.");
     }
 
 

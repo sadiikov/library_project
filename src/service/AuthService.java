@@ -28,11 +28,25 @@ public class AuthService {
     }
 
     private static void signIn() {
-        System.out.println("Enter email: ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println(" ");
+        System.out.println("  ============================  ");
+        System.out.println(" |                             | ");
+        System.out.println(" |  WELCOME TO THE SYSTEM      | ");
+        System.out.println(" |   PLEASE SIGN IN BELOW      | ");
+        System.out.println(" |=============================| ");
+        System.out.println("\n  ================================");
+        System.out.println("  |  ENTER YOUR EMAIL:            |");
+        System.out.println("  ================================");
         String email = strscan.nextLine();
-        System.out.println("Enter password: ");
+        System.out.println("  ================================");
+        System.out.println("  |  ENTER YOUR PASSWORD:         |");
+        System.out.println("  ================================");
         String password = strscan.nextLine();
+
         boolean signed = false;
+
         for (User user : users) {
             if(user.getEmail().equals(email) && user.getPassword().equals(password)){
                 setCurrentUser(user);
@@ -41,42 +55,76 @@ public class AuthService {
         }
 
         if(signed){
+            System.out.println("\n  ================================");
+            System.out.println("  |  SIGN-IN SUCCESSFUL!          |");
+            System.out.println("  ================================");
+
             if(getCurrentUser().getRole() == Role.USER){
+                System.out.println("  ================================");
+                System.out.println("  |  YOU ARE LOGGED IN AS A USER. |");
+                System.out.println("  ================================");
                 new UserService().service();
-            }else{
+            } else {
+                System.out.println("  ================================");
+                System.out.println("  |  YOU ARE LOGGED IN AS ADMIN.  |");
+                System.out.println("  ================================");
                 new AdminService().service();
             }
-        }else{
-            System.out.println("email or password is incorrect");
+        } else {
+            System.out.println("\n  ================================");
+            System.out.println("  | ERROR: EMAIL OR PASSWORD IS   |");
+            System.out.println("  | INCORRECT.                    |");
+            System.out.println("  ================================");
         }
     }
 
+
     private static void signUp() {
-        System.out.println("Enter email: ");
+        System.out.println("  ================================");
+        System.out.println("  |  ENTER YOUR EMAIL:            |");
+        System.out.println("  ================================");
         String email = strscan.nextLine();
 
         if(emailIsUnique(email)){
             User user = new User();
 
-            System.out.println("Enter your password: ");
+            System.out.println("  ================================");
+            System.out.println("  |  ENTER YOUR PASSWORD:         |");
+            System.out.println("  ================================");
             user.setPassword(strscan.nextLine());
 
             user.setId(UUID.randomUUID().toString());
-            System.out.println("Enter name: ");
+
+            System.out.println("  ================================");
+            System.out.println("  |  ENTER YOUR NAME:             |");
+            System.out.println("  ================================");
             user.setName(strscan.nextLine());
-            System.out.println("Enter surname: ");
+
+            System.out.println("  ================================");
+            System.out.println("  |  ENTER YOUR SURNAME:          |");
+            System.out.println("  ================================");
             user.setSurname(strscan.nextLine());
+
             user.setEmail(email);
             user.setRole(Role.USER);
+
             user.setHistories(new ArrayList<History>());
             user.setBorrows(new ArrayList<Borrow>());
             user.setBalance(0.0);
 
             users.add(user);
+
+            System.out.println("  ================================");
+            System.out.println("  |  SIGN-UP SUCCESSFUL!          |");
+            System.out.println("  ================================");
         }else{
-            System.out.println("This email is already signed up!");
+            System.out.println("  ================================");
+            System.out.println("  |  THIS EMAIL IS ALREADY        |");
+            System.out.println("  |  SIGNED UP!                   |");
+            System.out.println("  ================================");
         }
     }
+
 
     private static boolean emailIsUnique(String email) {
         for (User user : users) {

@@ -114,7 +114,6 @@ public class AdminService {
             }
         }
         if(!found) System.out.println("Section not found.");
-
     }
 
     private static void setSectionState() {

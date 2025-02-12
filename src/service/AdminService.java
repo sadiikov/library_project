@@ -3,6 +3,9 @@ package service;
 import static db.DataBase.*;
 
 import entity.*;
+import entity.Book;
+import entity.Section;
+import entity.SectionStatus;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -85,6 +88,10 @@ public class AdminService {
                 System.out.println("- " + section.getName() + " (Status: " + section.getSectionStatus() + ")");
             }
         }
+        System.out.println("Available sections:");
+        for (Section section : sections) {
+            System.out.println("- " + section.getName() + " (Status: " + section.getSectionStatus() + ")");
+        }
     }
 
     private static void showSectionWithBooks() {
@@ -95,6 +102,9 @@ public class AdminService {
         for (Section section : sections) {
             if (section.getName().equalsIgnoreCase(sectionName)) {
                 found = true;
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
                 System.out.println("Books in section " + sectionName + ":");
                 if (section.getBooks().isEmpty()) {
                     System.out.println("No books available in this section.");
@@ -107,6 +117,11 @@ public class AdminService {
             }
         }
         if(!found) System.out.println("Section not found.");
+                return;
+            }
+        }
+        System.out.println("Section not found.");
+
     }
 
     private static void setSectionState() {
@@ -139,6 +154,9 @@ public class AdminService {
         for (Section section : sections) {
             if (section.getName().equalsIgnoreCase(sectionName)) {
                 found = true;
+
+        for (Section section : sections) {
+            if (section.getName().equalsIgnoreCase(sectionName)) {
                 System.out.println("Enter book title:");
                 String title = strscan.nextLine();
                 System.out.println("Enter book author:");
@@ -148,6 +166,7 @@ public class AdminService {
                 strscan.nextLine();
 
                 Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks, BookState.AVAILABLE);
+                Book newBook = new Book(UUID.randomUUID().toString(), title, author, section, totalBooks, totalBooks);
                 books.add(newBook);
                 section.getBooks().add(newBook);
 
@@ -156,6 +175,10 @@ public class AdminService {
             }
         }
         if(!found) System.out.println("Section not found.");
+                return;
+            }
+        }
+        System.out.println("Section not found.");
     }
 
 
@@ -195,6 +218,7 @@ public class AdminService {
         }
         if(!found) System.out.println("User not found");
     }
+
 
 }
 

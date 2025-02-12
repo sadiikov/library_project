@@ -81,16 +81,11 @@ public class AdminService {
     private static void showSections() {
         if (sections.isEmpty()) {
             System.out.println("No sections available.");
-            return;
         }else {
             System.out.println("Available sections:");
             for (Section section : sections) {
                 System.out.println("- " + section.getName() + " (Status: " + section.getSectionStatus() + ")");
             }
-        }
-        System.out.println("Available sections:");
-        for (Section section : sections) {
-            System.out.println("- " + section.getName() + " (Status: " + section.getSectionStatus() + ")");
         }
     }
 
@@ -196,7 +191,11 @@ public class AdminService {
         for (User user : users) {
             if(user.getId().equalsIgnoreCase(id)){
                 found = true;
-                System.out.println(user.getHistories());
+                if(!user.getHistories().isEmpty()) {
+                    System.out.println(user.getHistories());
+                }else{
+                    System.out.println("User didn't borrow any book");
+                }
                 break;
             }
         }

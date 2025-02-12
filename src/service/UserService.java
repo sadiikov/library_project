@@ -4,9 +4,7 @@ import entity.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 import static db.DataBase.*;
@@ -42,7 +40,7 @@ public class UserService {
         User user = getCurrentUser();
 
         for (History history : user.getHistories()) {
-            System.out.println(history);
+            System.out.println("- " + history.getBook().getTitle() + " borrowed date time - " + history.getBorrowDateTime() + " returned date time - " + history.getReturnDateTime());
         }
     }
 
@@ -50,7 +48,7 @@ public class UserService {
         User user = getCurrentUser();
 
         for (Borrow borrow : user.getBorrows()) {
-            System.out.println(borrow);
+            System.out.println(" - book title - " + borrow.getBook().getTitle() + " borrowed date time - " + borrow.getBorrowedDateTime());
         }
     }
 
@@ -102,7 +100,7 @@ public class UserService {
                 History history = new History(user, book, LocalDateTime.now(), null);
                 user.getHistories().add(history);
                 book.setAvailableBooks(book.getAvailableBooks() - 1);
-                System.out.println("Book booked " + book.getTitle());
+                System.out.println("Book borrowed " + book.getTitle());
                 break;
             }
         }
@@ -126,8 +124,13 @@ public class UserService {
     }
 
     private void showSections() {
-        for (Section section : sections) {
-            System.out.println(section);
+        if (sections.isEmpty()) {
+            System.out.println("No sections available.");
+        }else {
+            System.out.println("Available sections:");
+            for (Section section : sections) {
+                System.out.println("- " + section.getName() + " section id - " + section.getId() + " (Status: " + section.getSectionStatus() + ")");
+            }
         }
     }
 }

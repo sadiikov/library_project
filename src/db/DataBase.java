@@ -22,8 +22,9 @@ public class DataBase {
         users.add(new User(UUID.randomUUID().toString(), "a", "a", "a", "a", Role.USER, new ArrayList<History>(), new ArrayList<Borrow>() , 0.0));
         users.add(new User(UUID.randomUUID().toString(), "b", "b", "b", "b", Role.USER, new ArrayList<History>(), new ArrayList<Borrow>() , 0.0));
 
-        books.add(new Book(UUID.randomUUID().toString(), "oppog'oy", "AkaUkaGreen", new Section(), 1, 1, BookState.AVAILABLE));
+        Book book = new Book(UUID.randomUUID().toString(), "oppog'oy", "AkaUkaGreen", new Section(), 1, 1, BookState.AVAILABLE);
+        books.add(book);
 
-        sections.add(new Section(UUID.randomUUID().toString(), "love", new ArrayList<Book>(), SectionStatus.ENABLED));
+        sections.add(new Section(UUID.randomUUID().toString(), "love", new ArrayList<Book>(Arrays.asList(book)), SectionStatus.ENABLED));
     }
 }
